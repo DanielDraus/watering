@@ -1,49 +1,124 @@
 {
-    "Main": {
-        "timer": 60
+  "Main": {
+    "timer": 60
+  },
+  "Pin_Config": {
+    "ADC_Pin": 0,
+    "Water_Pump_Pin": 12
+  },
+  "wifi_config": {
+    "ssid": "TP-LINK_40D3",
+    "password": "80495529"
+  },
+  "MQTT_config": {
+    "Host": "postman.cloudmqtt.com"
+  },
+  "moisture_sensor_cal": {
+    "dry": 841,
+    "wet": 470,
+    "Threshold": 70
+  },
+  "water_pump_time": {
+    "delay_pump_on": 3
+  },
+  "slack_auth": {
+    "app_id": "",
+    "secret_id": "",
+    "token": ""
+  },
+  "ubidots": {
+    "token": "",
+    "device": ""
+  },
+  "OWMC_config": {
+    "api_key": "282449fc447357de96461ec06eed1360",
+    "latitude": 51.10749,
+    "longitude": 16.8917524
+  },
+  "execution": [
+    {
+      "code": 0,
+      "display": "Monday",
+      "start_hour": 19.15,
+      "enable": 0
     },
-    "Pin_Config":{
-        "ADC_Pin": 0,
-        "Water_Pump_Pin": 12
+    {
+      "code": 1,
+      "display": "Tuesday",
+      "start_hour": 19.15,
+      "enable": 0
     },
-    "wifi_config": {
-        "ssid": "TP-LINK_40D3",
-        "password": "80495529"
+    {
+      "code": 2,
+      "display": "Wednesday",
+      "start_hour": 19.15,
+      "enable": 0
     },
-    "MQTT_config": {
-        "Host": "postman.cloudmqtt.com"
+    {
+      "code": 3,
+      "display": "Thursday",
+      "start_hour": 19.15,
+      "enable": 0
     },
-    "moisture_sensor_cal": {
-        "dry": 841,
-        "wet": 470,
-        "Threshold": 70
+    {
+      "code": 4,
+      "display": "Friday",
+      "start_hour": 19.15,
+      "enable": 0
     },
-    "water_pump_time": {
-        "delay_pump_on": 3
+    {
+      "code": 5,
+      "display": "Saturday",
+      "start_hour": 19.15,
+      "enable": 0
     },
-    "slack_auth": {
-        "app_id": "",
-        "secret_id": "",
-        "token": ""
+    {
+      "code": 6,
+      "display": "Sunday",
+      "start_hour": 19.15,
+      "enable": 0
+    }
+  ],
+  "valves": [
+    {
+      "no": 1,
+      "mm2m": 10,
+      "on_off": 1
     },
-    "ubidots":{
-        "token": "",
-        "device": ""
+    {
+      "no": 2,
+      "mm2m": 10,
+      "on_off": 1
     },
-    "OWMC_config": {
-        "api_key": "282449fc447357de96461ec06eed1360",
-        "latitude": 51.10749,
-        "longitude": 16.8917524
+    {
+      "no": 3,
+      "mm2m": 10,
+      "on_off": 1
     },
-
-    "valves": [
-        {"no":1, "mm2m": 10, "on_off":1},
-        {"no":2,"mm2m": 10, "on_off":1},
-        {"no":3,"mm2m": 10, "on_off":1},
-        {"no":4,"mm2m": 10, "on_off":1},
-        {"no":5,"mm2m": 10, "on_off":1},
-        {"no":6,"mm2m": 10, "on_off":1},
-        {"no":7,"mm2m": 10, "on_off":1},
-        {"no":8,"mm2m": 10, "on_off":1}
-    ]
+    {
+      "no": 4,
+      "mm2m": 10,
+      "on_off": 1
+    },
+    {
+      "no": 5,
+      "mm2m": 10,
+      "on_off": 1
+    },
+    {
+      "no": 6,
+      "mm2m": 10,
+      "on_off": 1
+    },
+    {
+      "no": 7,
+      "mm2m": 10,
+      "on_off": 1
+    },
+    {
+      "no": 8,
+      "mm2m": 10,
+      "on_off": 1
+    }
+  ]
 }

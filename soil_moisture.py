@@ -1,5 +1,8 @@
 import machine
 import utime
+
+from execution import Checker
+
 try:
     from forecast import Forecast
 except :
@@ -102,6 +105,9 @@ class MoistureSensor(object):
         except Exception as exc:
             print("[ERROR] Could not send SLACK message: %s" % str(exc))
 
+    def date_time_check(self):
+        self._water_me = Checker(self.config["execution"]).check_if_ready_for_exec()
+
     def soil_sensor_check(self, n_samples=10, rate=0.5):
         try:
             samples = self.read_samples(n_samples, rate)
@@ -147,8 +153,8 @@ class MoistureSensor(object):
                                 latitude=self.config["OWMC_config"]["latitude"],
                                 longitude=self.config["OWMC_config"]["longitude"])
             forecast.get()
-            print(forecast.water_demands)
             self.soil_sensor_check()
+            self.date_time_check()
             while self._water_me:
                 self.message_send("*" * 80)
                 self.message_send(
@@ -158,10 +164,10 @@ class MoistureSensor(object):
                 )
                 # This is brutal: Refactor
                 if not self.water_valves.valve_status:
-                    self.message_send("Turning Pump On: \t %s" % current_time(), True)
+                    self.message_send("Turning Valves On: \t %s" % current_time(), True)
                     self.water_valves.valve_on()
                     self.message_send(
-                        "[DEBUG] Setting Pump ON as water is @ %.2f%%"
+                        "[DEBUG] Setting Valves ON as water is @ %.2f%%"
                         % self._soilmoistperc,
                         True,
                     )
@@ -195,5 +201,6 @@ class MoistureSensor(object):
                         % self._soilmoistperc,
                         True,
                     )
+            Checker(self.config["execution"]).set_last_executed(True)
             print("[DEBUG] Sleep for %s seconds" % secs)
             utime.sleep(secs)

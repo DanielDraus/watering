@@ -78,9 +78,9 @@ class Forecast:
             for i, water_demand in enumerate(self.water_demands):
                 if hasattr(self.data[0], "evapotranspiration"):
                     print(f"evapotranspiration {self.data[0].evapotranspiration} mm/m2")
-                    water_demand += self.data[0].evapotranspiration
+                    water_demand["mm2m"] += self.data[0].evapotranspiration
                 if self.data[0].pop >= 0.8 and hasattr(self.data[0], "rain"):
                     rain_value= list(self.data[0].rain.values()).pop(0)
-                    print(f"will be raining {rain_value} mm/m2 current water_demand ={water_demand}")
-                    water_demand -= rain_value
+                    print(f"will be raining {rain_value} mm/m2 current water_demand ={ water_demand['mm2m']}")
+                    water_demand["mm2m"] -= rain_value
                 self.water_demands[i] = water_demand

@@ -89,7 +89,7 @@ class Data:
         et_rad = self.et_rad()
         value = 0.0023 * (float(self.main.temp) + 17.8)
         value = abs(value) * (float(self.main.temp_min) - float(self.main.temp_max))
-        value = abs(value) ** 0.5 * et_rad * (self.day_light / 24)
+        value = abs(value) ** 0.5 * et_rad * 0.408
         return abs(value)
 
     def __str__(self):

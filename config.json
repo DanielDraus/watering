@@ -30,14 +30,20 @@
         "token": "",
         "device": ""
     },
+    "OWMC_config": {
+        "api_key": "282449fc447357de96461ec06eed1360",
+        "latitude": 51.10749,
+        "longitude": 16.8917524
+    },
+
     "valves": [
-        {"no":1, "mm2m": 20, "on_off":1},
-        {"no":2,"mm2m": 20, "on_off":1},
-        {"no":3,"mm2m": 20, "on_off":1},
-        {"no":4,"mm2m": 20, "on_off":1},
-        {"no":5,"mm2m": 20, "on_off":1},
-        {"no":6,"mm2m": 20, "on_off":1},
-        {"no":7,"mm2m": 20, "on_off":1},
-        {"no":8,"mm2m": 20, "on_off":1}
+        {"no":1, "mm2m": 10, "on_off":1},
+        {"no":2,"mm2m": 10, "on_off":1},
+        {"no":3,"mm2m": 10, "on_off":1},
+        {"no":4,"mm2m": 10, "on_off":1},
+        {"no":5,"mm2m": 10, "on_off":1},
+        {"no":6,"mm2m": 10, "on_off":1},
+        {"no":7,"mm2m": 10, "on_off":1},
+        {"no":8,"mm2m": 10, "on_off":1}
     ]
 }

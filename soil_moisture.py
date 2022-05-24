@@ -142,9 +142,10 @@ class MoistureSensor(object):
         )
         self.water_valves.valve_off()
         while True:
-            forecast = Forecast(water_demands=[20, 10, 28, 22, 20, 20, 20, 20],
-                                api_key="282449fc447357de96461ec06eed1360", latitude=51.10749,
-                                longitude=16.8917524)
+            forecast = Forecast(water_demands=self.config["valves"],
+                                api_key=self.config["OWMC_config"]["api_key"],
+                                latitude=self.config["OWMC_config"]["latitude"],
+                                longitude=self.config["OWMC_config"]["longitude"])
             forecast.get()
             print(forecast.water_demands)
             self.soil_sensor_check()

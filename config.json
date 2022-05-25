@@ -7,8 +7,8 @@
     "Water_Pump_Pin": 12
   },
   "wifi_config": {
-    "ssid": "TP-LINK_40D3",
-    "password": "80495529"
+    "ssid": "",
+    "password": ""
   },
   "MQTT_config": {
     "Host": "postman.cloudmqtt.com"
@@ -31,7 +31,7 @@
     "device": ""
   },
   "OWMC_config": {
-    "api_key": "282449fc447357de96461ec06eed1360",
+    "api_key": "",
     "latitude": 51.10749,
     "longitude": 16.8917524
   },
@@ -46,7 +46,7 @@
       "code": 1,
       "display": "Tuesday",
       "start_hour": 19.15,
-      "enable": 0
+      "enable": 1
     },
     {
       "code": 2,

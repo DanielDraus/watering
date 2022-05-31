@@ -1,5 +1,8 @@
 import math
-import utime
+try:
+    import utime
+except:
+    import time as utime
 
 class Data:
     SOLAR_CONSTANT = 0.0820
@@ -14,9 +17,9 @@ class Data:
         def __str__(self):
             return ", ".join([f"{x}={self.__dict__.get(x)}" for x in self.__dict__ if not x.startswith("_")])
 
-    def __init__(self, latitude, dt, clouds, pop, main, rain=None, sunset=None, sunrise=None, **kwargs):
+    def __init__(self, latitude, dt, clouds, main, pop=None, rain=None, sunset=None, sunrise=None, **kwargs):
         self.latitude = latitude
-        self.dt = utime.gmtime(dt)
+        self.dt = utime.localtime(dt)
         self.day_of_year = self.dt[7]
         self.forecast_day = int((dt - utime.time()) / 86400)
         self.rain = rain

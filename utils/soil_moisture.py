@@ -1,22 +1,29 @@
+import gc
 import machine
 import utime
+print("Checker")
+from util.execution import Checker
+print(gc.mem_free() if hasattr(gc, "mem_free") else gc.collect())
+print("Ubidots")
+from rest.clients import Ubidots, Slack
+print(gc.mem_free() if hasattr(gc, "mem_free") else gc.collect())
+print("RealMQTTClient")
+from rest.mqtt import RealMQTTClient
 
-from execution import Checker
 
-try:
-    from forecast import Forecast
-except :
-    raise
-from utils import (
-    MQTTWriter,
-    Slack,
-    Ubidots,
+
+print(gc.mem_free() if hasattr(gc, "mem_free") else gc.collect())
+
+from util.forecast import Forecast
+
+
+from util.util import (
     adc_map,
     average,
     current_time,
     force_garbage_collect,
 )
-from water_valves import Valves
+from util.water_valves import Valves
 
 
 class MoistureSensor(object):
@@ -76,7 +83,7 @@ class MoistureSensor(object):
     @property
     def mqtt(self):
         if (self.config["MQTT_config"].get("Host")) and (not self._mqtt):
-            self._mqtt = MQTTWriter(self.config["MQTT_config"]["Host"])
+            self._mqtt = RealMQTTClient(**self.config["MQTT_config"])
         return self._mqtt
 
     def read_samples(self, n_samples, rate):

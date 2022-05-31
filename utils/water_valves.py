@@ -56,7 +56,6 @@ class Valves:
                 self.valve(1)
             except Exception:
                 self.valve(0)
-                raise
                 print("[ERROR] Failed turn Pump On!")
 
 

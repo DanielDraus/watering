@@ -1,17 +1,11 @@
 import gc
 import json
 import time
-
-import esp
-import ntptime
 import machine
 import network
 import ntptime
-import urequests
-import usocket
 import utime
-from ubinascii import hexlify
-from umqtt.simple import MQTTClient
+
 
 
 class WiFi:
@@ -28,7 +22,7 @@ class WiFi:
         wlan = network.WLAN(network.STA_IF)
         wlan.active(True)
         if not wlan.isconnected():
-            print("connecting to network '%s'..." % self.essid)
+            print(f"connecting to network{self.essid} : {self.password}")
             wlan.connect(self.essid, self.password)
             # connect() appears to be async - waiting for it to complete
             while not wlan.isconnected():
@@ -97,120 +91,6 @@ class InitialSetUp:
         print("Local time after synchronization：%s" % str(time.localtime()))
 
 
-class Slack:
-    def __init__(self, app_id, secret_id, token):
-        """
-        Get an "incoming-webhook" URL from your slack account.
-        @see https://api.slack.com/incoming-webhooks
-        eg: https://hooks.slack.com/services/<app_id>/<secret_id>/<token>
-        """
-        self._url = "https://hooks.slack.com/services/%s/%s/%s" % (
-            app_id,
-            secret_id,
-            token,
-        )
-
-    def slack_it(self, msg):
-        """ Send a message to a predefined slack channel."""
-        headers = {"content-type": "application/json"}
-        data = '{"text":"%s"}' % msg
-        resp = urequests.post(self._url, data=data, headers=headers)
-        return "Message Sent" if resp.status_code == 200 else "Failed to sent message"
-
-
-class MQTTWriter:
-    """Writer interface over umqtt API."""
-
-    __variables__ = ("host", "client", "port", "user", "password")
-    __flag = False
-
-    def __init__(self, host, port=16999, user="zbslcnew", password="rdJV2U8H8_uM"):
-        self.host = host
-        self.port = port
-        self.user = user
-        self.password = password
-        if self.host:
-            #client_id, server, port=0, user=None, password=None, keepalive=0, ssl=False, ssl_params={})
-            self.client = MQTTClient(
-                client_id=hexlify(machine.unique_id()), server=self.host,
-                port=self.port, password=self.password, user=self.user
-            )
-            self.check_ip_up()
-            self._connect()
-
-    def check_ip_up(self):
-        try:
-            s = usocket.socket(usocket.AF_INET, usocket.SOCK_STREAM)
-            s.settimeout(1)
-            s.connect((self.host, self.port))
-            print("[INFO] Host %s is UP!" % self.host)
-            self.__flag = True
-        except Exception:
-            print("[ERROR] Host %s is DOWN!" % self.host)
-            utime.sleep(1)
-        finally:
-            s.close()
-
-    def _connect(self):
-        print("[INFO] Connecting to %s" % (self.host))
-        if True: #self.__flag:
-            self.client.connect()
-            print("[INFO] Connection successful")
-            self.__flag = True
-        else:
-            print("[ERROR] Cannot connect to host:%s" % self.host)
-
-    def publish(self, topic="", msg="", encoder="utf-8"):
-        print("[INFO] Publishing message: %s on topic: %s" % (msg, topic))
-        if not self.__flag:
-            self.check_ip_up()
-            self._connect()
-        if self.__flag:
-            self.client.publish(bytes(topic, encoder), bytes(msg, encoder))
-            print("[INFO] Published Successfully!")
-        else:
-            print("[ERROR] Failed to Publish the message, Link is not UP!")
-
-    def connect_and_subscribe(self, callback):
-        if self.__flag:
-            self.check_ip_up()
-            self._connect()
-        self.client.set_callback(callback)
-        self.client.subscribe("/home/watering")
-        print("Subscribed to {}".format("/home/watering"))
-
-
-class Ubidots:
-    def __init__(self, TOKEN, device_label):
-        self.url = "https://things.ubidots.com/api/v1.6/devices/{}?token={}".format(
-            device_label, TOKEN
-        )
-
-    def post_request(self, payload):
-        """Creates the headers for the HTTP requests and Makes the HTTP requests"""
-        print("[DEBUG] Uploading Payload: %s" % payload)
-        assert isinstance(payload, dict)
-
-        status = 400
-        attempts = 0
-        while status >= 400 and attempts <= 5:
-            req = urequests.post(url=self.url, json=payload)
-            status = req.status_code
-            attempts += 1
-            utime.sleep(1)
-            print("[DEBUG] Sending data to Ubidots...")
-
-        # Processes results
-        if status == 200:
-            print("[INFO] Request made properly, Updated Ubidots with %s." % payload)
-            return True
-        else:
-            print(
-                "[ERROR] Could not send data after 5 attempts, please check "
-                "your token credentials and internet connection."
-            )
-            return False
-
 
 def force_garbage_collect():
     # Not so ideal but someone has to do it
@@ -225,13 +105,6 @@ def current_time():
     mins = "0" + str(mins) if mins < 10 else secs
     datetime = "%s-%s-%s %s:%s:%s" % (year, month, day, hours, mins, secs)
     return datetime
-
-
-def read_config(filename):
-    with open(filename) as _f:
-        config = json.load(_f)
-    assert isinstance(config, dict)
-    return config
 
 
 def enter_deep_sleep(secs):

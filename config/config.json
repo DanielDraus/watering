@@ -11,7 +11,10 @@
     "password": ""
   },
   "MQTT_config": {
-    "Host": "postman.cloudmqtt.com"
+    "host": "postman.cloudmqtt.com",
+    "user": "",
+    "password": "",
+    "port":16999
   },
   "moisture_sensor_cal": {
     "dry": 841,

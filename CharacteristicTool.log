@@ -1,0 +1,10 @@
+2022-05-30 16:56:53,039 - CharacteristicToolF23528 - ERROR - ask_for_path() got an unexpected keyword argument 'initial_dir'
+2022-05-30 16:56:53,040 - CharacteristicToolF23528 - ERROR - Traceback (most recent call last):
+  File "C:/Users/ddraus/PycharmProjects/watering/asas.py", line 177, in on_selection
+    self.command.execute()
+  File "C:/Users/ddraus/PycharmProjects/watering/asas.py", line 706, in execute
+    entities = self.get_list_of_items()
+  File "C:/Users/ddraus/PycharmProjects/watering/asas.py", line 690, in get_list_of_items
+    file_path = self.ask_for_path(file_name="test_statuses.csv", initial_dir=os.path.dirname(__file__))
+TypeError: ask_for_path() got an unexpected keyword argument 'initial_dir'
+

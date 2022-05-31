@@ -1,10 +1,12 @@
 # This file is executed on every boot (including wake-boot from deepsleep)
 import esp
-from utils import InitialSetUp, read_config
+
+from config.reader import Reader
+from utils.util import InitialSetUp
 
 if __name__ == "__main__":
     esp.osdebug(None)
-    CONFIG = read_config("config.json")
-    run = InitialSetUp(CONFIG)
+    config = Reader().read()
+    run = InitialSetUp(config)
     run.wifi_config()  # Connect to WIFI
     run.set_tz()  # Set timezone

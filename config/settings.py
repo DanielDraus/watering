@@ -1,0 +1,1 @@
+MODE = 1 # 0=prod, 1=dev
